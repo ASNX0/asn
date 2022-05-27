@@ -1,20 +1,19 @@
-// ignore: camel_case_types
-class hist {
-  hist({
-    required this.qr,
+class passenger {
+  passenger({
+    required this.name,
     required this.createdAt,
   });
 
-  String qr;
+  String name;
   DateTime createdAt;
 
-  factory hist.fromJson(Map<String, dynamic> json) => hist(
-        qr: json["trip_name"],
+  factory passenger.fromJson(Map<String, dynamic> json) => passenger(
+        name: json["name"],
         createdAt: DateTime.parse(json["created_at"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "trip_name": qr,
+        "name": name,
         "created_at": createdAt.toIso8601String(),
       };
 }

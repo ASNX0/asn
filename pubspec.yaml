@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+ 
+  firebase_messaging: ^11.4.0
   flutter_rating_bar: ^4.0.1
   loading_animation_widget:
   flutter_local_notifications: ^9.4.0

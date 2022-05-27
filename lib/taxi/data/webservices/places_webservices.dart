@@ -21,7 +21,7 @@ class PlacesWebservices {
         suggestionsBaseUrl,
         queryParameters: {
           'input': place,
-          'types': 'address',
+          'types': 'locality',
           'components': 'country:SY',
           'key': googleAPIKey,
           'sessiontoken': sessionToken

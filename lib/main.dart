@@ -4,10 +4,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scannerapp/Screens/bus-driver-screen.dart';
+
 import 'package:scannerapp/Screens/vertical-card-pager.dart';
+import 'package:scannerapp/histroy.dart';
 import 'package:scannerapp/home.dart';
 import 'package:scannerapp/logging/login.dart';
 import 'package:scannerapp/logging/upload.dart';
+import 'package:scannerapp/new1/start.dart';
 import 'package:scannerapp/taxi/business_logic/cubit/maps/maps_cubit.dart';
 import 'package:scannerapp/taxi/data/repository/maps_repo.dart';
 import 'package:scannerapp/taxi/data/webservices/places_webservices.dart';
@@ -23,6 +27,7 @@ import 'live Location/Myapp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 
   runApp(MyApp(
@@ -68,8 +73,11 @@ class _MyAppState extends State<MyApp> {
           //   onGenerateRoute: appRouter.generateRoute,
           initialRoute: '/splash-secreen',
           routes: {
+            '/start': (context) => providance(),
             '/myview': (context) => MyView(),
+            '/history': (context) => History(),
             '/GmScreen': (context) => GmScreen(),
+            '/BusDriver': (context) => BusDriver(),
             '/map-screen': (context) => MapScreen(),
             '/home': (context) => Home(),
             '/live-location': (context) => App(),

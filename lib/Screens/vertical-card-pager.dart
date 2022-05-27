@@ -20,7 +20,22 @@ class MyView extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/GmScreen');
                 },
-                child: Text("GmScreen")),
+                child: Text("Gmscreen")),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/start');
+                },
+                child: Text("start")),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/history');
+                },
+                child: Text("history")),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/BusDriver');
+                },
+                child: Text("busDriver")),
             TextButton(
                 onPressed: () {
                   Account.logout(context);

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_place/google_place.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:scannerapp/taxi/constnats/my_colors.dart';
 import 'package:scannerapp/taxi/data/models/Place_suggestion.dart';
@@ -201,7 +202,8 @@ class _GmScreenState extends State<GmScreen> {
         if (state is PlaceLocationLoaded) {
           selectedPlace = (state).place;
           goToMySearchedForLocation();
-          getMarkerData();
+          // getMarkerData();
+          filterMarkers();
           // getDirections();
           isTimeAndDistanceVisible = true;
         }
@@ -303,11 +305,12 @@ class _GmScreenState extends State<GmScreen> {
     getMyCurrentLocation();
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(platform: TargetPlatform.android),
-            "assets/bus.png")
+            "assets/bus2.png")
         .then((onValue) {
       carIcon = onValue;
     });
-    getMarkerData();
+    // getMarkerData();
+    filterMarkers();
 
     super.initState();
   }
@@ -382,7 +385,7 @@ class _GmScreenState extends State<GmScreen> {
                 )
               : Container(),
           // isTripDone ? _showMyDialog(context) : Center(),
-          // isTripDone ? _showMyDialog(context) : Center(),
+          isTripDone ? _showMyDialog(context) : Center(),
         ],
       ),
       floatingActionButton: Container(
@@ -403,6 +406,7 @@ class _GmScreenState extends State<GmScreen> {
 
   late LatLng DlatLng;
   bool isTripDone = false;
+  bool closeBus = false;
 
   initMarker(specifyla, specifylo, angle, specifyId) async {
     var markerIdVal = specifyId;
@@ -412,6 +416,9 @@ class _GmScreenState extends State<GmScreen> {
       rotation: angle,
       markerId: markerId,
       position: LatLng(specifyla, specifylo),
+      anchor: Offset(0.5, 0.5),
+      flat: true,
+      draggable: false,
       infoWindow: InfoWindow(title: "title"),
     );
 
@@ -434,7 +441,7 @@ class _GmScreenState extends State<GmScreen> {
     });
   }
 
-  getMarkerData() async {
+  filterMarkers() {
     CollectionReference reference =
         FirebaseFirestore.instance.collection('location');
     reference.snapshots().listen((querySnapshot) {
@@ -445,16 +452,54 @@ class _GmScreenState extends State<GmScreen> {
             .then((myMarkers) {
           if (myMarkers.docs.isNotEmpty) {
             for (int i = 0; i < myMarkers.docs.length; i++) {
-              initMarker(
+              var busDist = Geolocator.distanceBetween(
+                position!.latitude,
+                position!.longitude,
                 myMarkers.docs[i].data()['latitude'],
                 myMarkers.docs[i].data()['longitude'],
-                myMarkers.docs[i].data()['angle'],
-                myMarkers.docs[i].id,
               );
+
+              print("busDist= ${busDist / 1000}");
+              setState(() {
+                if (busDist / 1000 < 2.0) {
+                  initMarker(
+                    myMarkers.docs[i].data()['latitude'],
+                    myMarkers.docs[i].data()['longitude'],
+                    myMarkers.docs[i].data()['angle'],
+                    myMarkers.docs[i].id,
+                  );
+                } else {
+                  markers.clear();
+                }
+              });
             }
           }
         });
       });
     });
   }
+
+  // getMarkerData() async {
+  //   CollectionReference reference =
+  //       FirebaseFirestore.instance.collection('location');
+  //   reference.snapshots().listen((querySnapshot) {
+  //     querySnapshot.docChanges.forEach((change) {
+  //       FirebaseFirestore.instance
+  //           .collection('location')
+  //           .get()
+  //           .then((myMarkers) {
+  //         if (myMarkers.docs.isNotEmpty) {
+  //           for (int i = 0; i < myMarkers.docs.length; i++) {
+  //             initMarker(
+  //               myMarkers.docs[i].data()['latitude'],
+  //               myMarkers.docs[i].data()['longitude'],
+  //               myMarkers.docs[i].data()['angle'],
+  //               myMarkers.docs[i].id,
+  //             );
+  //           }
+  //         }
+  //       });
+  //     });
+  //   });
+  // }
 }

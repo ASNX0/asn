@@ -15,9 +15,10 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  Future<List<hist>>? history;
+  late Future<List<hist>> history;
   void initState() {
     super.initState();
+
     setState(() {
       history = getAllhists();
     });
@@ -34,134 +35,127 @@ class _HistoryState extends State<History> {
         title: Text('My History'),
       ),
       body: FutureBuilder<List<hist>>(
-        future: history,
+        future: getAllhists(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 106, 161, 206),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black38,
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2, 4), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
+          return Column(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 106, 161, 206),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black38,
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset: Offset(2, 4), // changes position of shadow
                         ),
-                      ),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 5.w, vertical: 1.8.h),
-                      height: 54.h,
-                      child: SfCalendar(
-                        onSelectionChanged: (CalendarSelectionDetails details) {
-                          WidgetsBinding.instance!.addPostFrameCallback((_) {
-                            setState(() {
-                              date = details.date!;
-                            });
-                          });
-                        },
-                        todayTextStyle: TextStyle(color: Colors.white),
-                        todayHighlightColor: Colors.black,
-                        selectionDecoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2,
-                                color: Color.fromARGB(255, 0, 95, 173)),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomLeft: Radius.circular(12))),
-                        view: CalendarView.month,
-                        firstDayOfWeek: 6,
-                        initialDisplayDate: DateTime.now(),
-                        initialSelectedDate: DateTime.now(),
-                        showNavigationArrow: true,
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
                       ),
                     ),
-                  ],
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, i) {
-                        return (date.toString().split(" ").first ==
-                                snapshot.data![i].createdAt
-                                    .toString()
-                                    .split(" ")
-                                    .first)
-                            ? Card(
-                                color: Color.fromARGB(214, 255, 255, 255),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                elevation: 3,
-                                shadowColor: Colors.black,
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 10),
-                                child: ListTile(
-                                  contentPadding: EdgeInsets.only(bottom: 16),
-                                  title: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0, horizontal: 11),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.directions_bus_outlined,
-                                            color: Colors.red[900],
-                                            size: 30,
-                                          ),
-                                          SizedBox(width: 22),
-                                          Text(
-                                            'Trip: ${snapshot.data![i].qr}',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
-                                      ),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.8.h),
+                    height: 54.h,
+                    child: SfCalendar(
+                      onSelectionChanged: (CalendarSelectionDetails details) {
+                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          setState(() {
+                            date = details.date!;
+                          });
+                        });
+                      },
+                      todayTextStyle: TextStyle(color: Colors.white),
+                      todayHighlightColor: Colors.black,
+                      selectionDecoration: BoxDecoration(
+                          border: Border.all(
+                              width: 2, color: Color.fromARGB(255, 0, 95, 173)),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              bottomLeft: Radius.circular(12))),
+                      view: CalendarView.month,
+                      firstDayOfWeek: 6,
+                      initialDisplayDate: DateTime.now(),
+                      initialSelectedDate: DateTime.now(),
+                      showNavigationArrow: true,
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, i) {
+                      return (date.toString().split(" ").first ==
+                              snapshot.data![i].createdAt
+                                  .toString()
+                                  .split(" ")
+                                  .first)
+                          ? Card(
+                              color: Color.fromARGB(214, 255, 255, 255),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              elevation: 3,
+                              shadowColor: Colors.black,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 10),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.only(bottom: 16),
+                                title: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4.0, horizontal: 11),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.directions_bus_outlined,
+                                          color: Colors.red[900],
+                                          size: 30,
+                                        ),
+                                        SizedBox(width: 22),
+                                        Text(
+                                          'Trip: ${snapshot.data![i].qr}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  subtitle: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.timer,
-                                        color: Colors.green,
-                                        size: 30,
-                                      ),
-                                      Text(
-                                        snapshot.data![i].createdAt
-                                            .toString()
-                                            .split(".")
-                                            .first,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      SizedBox(width: 130),
-                                    ],
-                                  ),
                                 ),
-                              )
-                            : Container();
-                      }),
-                )
-              ],
-            );
-          } else if (snapshot.hasError) {
-            Text('Sorry there is an error');
-            print('sorry');
-          }
-          return Center(child: CircularProgressIndicator());
+                                subtitle: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.timer,
+                                      color: Colors.green,
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      snapshot.data![i].createdAt
+                                          .toString()
+                                          .split(".")
+                                          .first,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(width: 130),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Container();
+                    }),
+              )
+            ],
+          );
         },
       ),
     );
@@ -175,7 +169,6 @@ class _HistoryState extends State<History> {
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson.toString());
 
-    print(user);
     if (user != null)
       data = {
         'email': '${user['email']}',
@@ -183,7 +176,9 @@ class _HistoryState extends State<History> {
     var response = await CallApi().postData(data, 'history');
 
     if (response.statusCode == 200) {
+      print(response.body);
       final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+
       return parsed.map<hist>((item) => hist.fromJson(item)).toList();
     } else {
       throw Exception("Can't load hist");

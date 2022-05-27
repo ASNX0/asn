@@ -66,15 +66,7 @@ class SignIn extends StatelessWidget {
                             margin: EdgeInsets.only(top: 2.h),
                             decoration: BoxDecoration(
                               color: Color.fromARGB(225, 209, 27, 14),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  spreadRadius: 1,
-                                  blurRadius: 3,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
+                              boxShadow: [],
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: MaterialButton(
