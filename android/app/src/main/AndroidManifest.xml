@@ -14,7 +14,7 @@
         android:label="scannerapp"
         android:icon="@mipmap/ic_launcher">
         <!-- added api key -->
-            <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDVbqTeQBGokZIyBn-L66QYLfRlixQlXvA"/>
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -9,8 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scannerapp/logging/qr.dart';
 import 'package:scannerapp/new1/classes/whereto.dart';
-import 'package:scannerapp/new1/extra.dart';
-import 'package:scannerapp/new1/seat.dart';
+import 'package:scannerapp/new1/out.dart';
 
 class Reserv extends StatefulWidget {
   WhereTo whereTo;
@@ -18,14 +17,19 @@ class Reserv extends StatefulWidget {
   var place2;
   var datt1;
   var datt2;
+  int trip_id;
+  int bus_id;
+  int price;
 
-  Reserv({
-    required this.whereTo,
-    this.place1,
-    this.place2,
-    this.datt1,
-    this.datt2,
-  });
+  Reserv(
+      {required this.whereTo,
+      this.place1,
+      this.place2,
+      this.datt1,
+      this.datt2,
+      required this.bus_id,
+      required this.trip_id,
+      required this.price});
 
   @override
   _ReservState createState() => _ReservState();
@@ -64,32 +68,14 @@ class _ReservState extends State<Reserv> {
                 onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => seat(widget.whereTo, widget.datt1,
-                            widget.datt2, widget.place1, widget.place2),
-                      ),
+                          builder: (context) => Out(
+                                bus_id: widget.bus_id,
+                                trip_id: widget.trip_id,
+                                price: widget.price,
+                              )),
                     ),
                 icon: Icon(Icons.arrow_forward_ios)),
 
-            // ignore: deprecated_member_use
-          ]),
-          Row(children: [
-            Container(
-              width: 300,
-              child: ListTile(
-                title: Text('Extra',
-                    style:
-                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-                leading: Icon(Icons.luggage),
-                subtitle: Text("Add extra luggage from 2000p(one way)"),
-              ),
-            ),
-            IconButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => extra(),
-                    )),
-                icon: Icon(Icons.arrow_forward_ios)),
             // ignore: deprecated_member_use
           ]),
           Container(

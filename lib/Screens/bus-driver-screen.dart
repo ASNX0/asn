@@ -16,17 +16,6 @@ class BusDriver extends StatefulWidget {
 }
 
 class _BusDriverState extends State<BusDriver> {
-  List Users = [
-    "ahmed",
-    "ammar",
-    "samer",
-    "haneen",
-    "firas",
-    "lama",
-    "rama",
-    "mohammed",
-    "nader"
-  ];
   Future<List<passenger>>? allPassengers;
   FirebaseMessaging _fcm = FirebaseMessaging.instance;
 

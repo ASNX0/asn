@@ -7,6 +7,9 @@ import 'package:scannerapp/Screens/passenger_model.dart';
 import 'package:scannerapp/new1/classes/whereto.dart';
 
 import 'package:scannerapp/new1/dates.dart';
+import 'package:scannerapp/new1/local.dart';
+import 'package:scannerapp/new1/localArea.dart';
+import 'package:scannerapp/new1/ticket.dart';
 import 'package:scannerapp/taxi/business_logic/cubit/maps/maps_cubit.dart';
 import 'package:scannerapp/taxi/constnats/my_colors.dart';
 import 'package:scannerapp/taxi/data/models/Place_suggestion.dart';
@@ -231,9 +234,10 @@ class _providanceState extends State<providance> {
                         border: OutlineInputBorder(),
                         hintText: date == null
                             ? 'Departing'
-                            : '${DateFormat.yMd().format(date!)}',
+                            : '${DateFormat('yyyy-MM-dd-EE').format(date!).toString()}',
                         hintStyle: TextStyle(
                           color: Colors.black,
+                          fontSize: 17,
                         ),
                       ),
                     ),
@@ -275,34 +279,16 @@ class _providanceState extends State<providance> {
                             },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: datt == null ? 'Return' : '$datt',
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
+                          hintText: datt == null
+                              ? 'Return'
+                              : '${DateFormat('yyyy-MM-dd-EE').format(datt!).toString()}',
+                          hintStyle:
+                              TextStyle(color: Colors.black, fontSize: 17),
                         )),
                   ),
                 ],
               ),
             ),
-            Container(
-                height: 60,
-                margin: EdgeInsets.only(
-                  top: 10,
-                  left: 10,
-                  right: 10,
-                ),
-                child: TextFormField(
-                  onChanged: (value) {
-                    passenger = int.parse(value);
-                    print(passenger);
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      label: Text(
-                        "Passenger",
-                        style: TextStyle(color: Colors.black),
-                      )),
-                )),
             Container(
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 18, 65, 104),
@@ -329,6 +315,30 @@ class _providanceState extends State<providance> {
                 ),
               ),
             ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (BuildContext context) => Ticket()));
+            //   },
+            //   child: Text(
+            //     "Ticket",
+            //     style: TextStyle(fontSize: 20, color: Colors.black),
+            //   ),
+            // ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (BuildContext context) => LocalArea()));
+            //   },
+            //   child: Text(
+            //     "local",
+            //     style: TextStyle(fontSize: 20, color: Colors.black),
+            //   ),
+            // ),
           ],
         ),
 
